@@ -2,7 +2,6 @@ services:
   mysqldb:
     container_name: mysql-db1
     image: mysql:8
-    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: examdb205
@@ -17,7 +16,6 @@ services:
 
   backend:
     image: tgvreddy/2300032314-exam-backend:latest
-    container_name: springboot
     container_name: backend
     build:
       context: ./BACKEND
@@ -32,7 +30,6 @@ services:
 
   frontend:
     image: tgvreddy/2300032314-exam-frontend:latest
-    container_name: react
     container_name: frontend
     build:
       context: ./FRONTEND
