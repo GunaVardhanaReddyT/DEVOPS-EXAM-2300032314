@@ -1,41 +1,32 @@
 services:
   mysqldb:
+    container_name: mysql-db1
     image: mysql:8
-    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: examdb205
+      # MYSQL_USER: klu
+      # MYSQL_PASSWORD: klu
     ports:
       - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - springboot-mysql-net
 
   backend:
-    image: tgvreddy/2300032314-exam-backend:latest
-    container_name: springboot
+    container_name: backend
+    build:
+      context: ./BACKEND
+      dockerfile: ../BACKEND/backend.Dockerfile
     ports:
       - "2025:2000"
     depends_on:
       - mysqldb
     restart: on-failure
-    networks:
-      - springboot-mysql-net
 
   frontend:
-    image: tgvreddy/2300032314-exam-frontend:latest
-    container_name: react
+    container_name: frontend
+    build:
+      context: ./FRONTEND
+      dockerfile: ../FRONTEND/frontend.Dockerfile
     ports:
       - "3001:80"
     depends_on:
       - backend
-    restart: on-failure
-    networks:
-      - springboot-mysql-net
-
-volumes:
-  mysql_data:
-
-networks:
-  springboot-mysql-net:
